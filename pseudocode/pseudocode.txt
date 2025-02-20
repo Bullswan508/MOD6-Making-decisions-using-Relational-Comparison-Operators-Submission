@@ -1,0 +1,100 @@
+# For this assignment I decided to create a python class "Customer" to store the text data.
+# Each of the instance variables, "Customer.phone_number", "Customer.num_texts", and "Customer.bill_amount" all store the phone number collected, the amount of texts sent from that number, and the amount that number will end up owing
+
+# Since the content of the messages doesn't matter for this assignment, I imagined that there is a list of messages where a notification is added every time a text is sent (as seen in "text_data.txt")
+# There is a special "sentinel" number (000)-000-0000
+# Once a message is sent by this number, the program knows to stop collecting texts
+
+-----------------
+--- Constants ---
+-----------------
+
+BASE_BILL_AMOUNT = 5 # The base amount owed by any number using the text service
+BILL_TAX_MULTIPLIER = 1.14 # 14% tax for all bills, any bill amount multiplied by 1.14 will effectively have a 14% tax applied
+
+------------
+--- Code ---
+------------
+
+class Customer:
+    
+    # Instance Variables
+
+    self.phone_number # The phone number of the customer in the form "XXXXXXXXXX" where X is a digit
+    self.num_texts # The number of texts sent by the customer
+    self.bill_amount # The amount of money this customer owes
+
+    # Methods
+
+    # def create_bill(num_texts) # This is the method used during the initialization of a "Customer" object to return the amount the customer owes
+
+        # I chose to just brute force the range check required to find the amount owed based on the number of texts, however there may be a more elegant way 
+
+       
+        if num_texts <= 100:
+            return BASE_BILL_AMOUNT * BILL_TAX_MULTIPLIER
+        
+        if num_texts <= 300:
+            return ((num_texts - 100) * 0.03 + BASE_BILL_AMOUNT) * BILL_TAX_MULTIPLIER
+        
+        return (((num_texts - 300) * 0.02) + (200 * 0.03) + BASE_BILL_AMOUNT) * BILL_TAX_MULTIPLIER
+
+-----------------
+--- Main Loop ---
+-----------------
+
+phone_number_counts = {} # Dictionary storing all numbers that sent texts before the sentinel was detected and the number of texts they sent. Keys = phone number, Values = number of texts sent by key
+
+customers = [] # List storing all the different customer objects created by the following for-loop
+
+for phone_number, num_texts in phone_number_counts: # Iterate through all the items in the "phone_number_counts" dictionary
+
+    customers.append(Customer(phone_number, num_texts)) # Creates a "Customer" object with the instance variables "phone_number" and "num_texts" and appends it to the customers list
+
+
+
+while True: # This while-loop will always be looping until broken explicitly
+
+    print("Please select from the following options")
+    print("Scenario 1")
+    print("Scenario 2")
+    print("Scenario 3")
+    print("Scenario 4")
+    print("Exit Scenario")
+
+    user_input = input("Enter a number corresponding to the option you would like: ") # Asks for a number entered by the user. Output will be more detailed in actual code
+
+    match user_input: # Will match the value stored in the user_input variable to a specific case. If the case isn't found "case _" will be run
+
+        case 1:
+            for customer in cumstomers:
+                print(f"{customer.phone_number} sent {customer.num_texts} texts and owes ${customer.bill_amount}")
+
+        case 2:
+            for customer in customers:
+                if customer.num_texts > 100:
+                    print(f"{customer.phone_number} sent {customer.num_texts} texts and owes ${customer.bill_amount}")
+
+        case 3:
+            for customer in customers:
+                if customer.bill_amount > 10:
+                    print(f"{customer.phone_number} sent {customer.num_texts} texts and owes ${customer.bill_amount}")
+
+        case 4:
+
+            area_code = input("What area code would you like to see data for?: ") # Gets the area code from the user and stores it in "area_code"
+
+            for customer in customers:
+                if customer.phone_number[:3] == area_code: # NOTE: phone_number[:3] is the first three digits of the "phone_number" AKA the area code
+                    print(f"{customer.phone_number} sent {customer.num_texts} texts and owes ${customer.bill_amount}")
+
+        case 5:
+            break # Breaks out of the while-loop
+
+        case _: # If none of the other cases are selected, the user input an invalid option. This case is then run
+            
+            print("Please enter a valid option!")
+
+    
+
+
